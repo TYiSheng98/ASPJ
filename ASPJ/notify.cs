@@ -13,7 +13,16 @@ namespace ASPJ
         public String msg { get; set; }
         public String status { get; set; }
         public String type { get; set; }
-
+        public int id { get; set; }
+        public notify()
+        {
+            this.send = send;
+            this.filename = filename;
+            this.msg = msg;
+            this.status = status;
+            this.type = type;
+            this.id = id;
+        }
 
     }
 }

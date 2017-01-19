@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,14 +11,17 @@ using System.Web.UI.WebControls;
 
 namespace ASPJ
 {
+
     public partial class Notification : System.Web.UI.Page
     {
+        notify ha = new notify();
         protected void Page_Load(object sender, EventArgs e)
         {
             Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
             lol();
+            
         }
-
+        
 
         protected void TimerforN_Tick(object sender, EventArgs e)
         {
@@ -28,7 +32,7 @@ namespace ASPJ
         }
         public void lol()
         {
-            notify ha = new notify();
+            
             using (SqlConnection connection = new
    SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
    "NotificationConnectionString1"].ConnectionString))
@@ -36,7 +40,7 @@ namespace ASPJ
 
                 connection.Open();
                 String query;
-                query = " SELECT sender,filename,type from [dbo].[user]where receiver =" + session.SName;
+                query = " SELECT sender,filename,type,id from [dbo].[notification]where receiver ='" + session.SName+"'";
                 SqlCommand cc = new SqlCommand(query, connection);
                 //cc.Parameters.AddWithValue("@1", Username.Text);
                 //cc.Parameters.AddWithValue("@2", Password.Text);
@@ -44,27 +48,48 @@ namespace ASPJ
                 DataTable dt = new DataTable();
                 dt.Clear();
                 da.Fill(dt);
-                //type = int.Parse(dt.Rows[0][0].ToString());
-                //send = dt.Rows[0][1].ToString();
-                //msg = dt.Rows[0][2].ToString();
-                //st = dt.Rows[0][3].ToString();
+                connection.Close();
                 ha.send = dt.Rows[0][0].ToString();
                 ha.filename = dt.Rows[0][1].ToString();
                 ha.type = dt.Rows[0][2].ToString();
-                connection.Close();
+                ha.id = int.Parse(dt.Rows[0][3].ToString());
+                
             }
 
             HtmlGenericControl li = new HtmlGenericControl("li");
+            li.Attributes.Add("id","yaa");
+            li.Attributes.Add("class", "ya");
+            Button butt = new Button();
+            butt.Attributes.Add("id", ha.id.ToString());
+            butt.BackColor = Color.FromArgb(66, 134, 244);
+            butt.Text= Server.HtmlEncode(ha.send + " like your page!");
+            butt.Click += new EventHandler(this.ho_Click);
 
-            HtmlGenericControl anchor = new HtmlGenericControl("a");
-            anchor.Attributes.Add("href", "#");
-            if (ha.type.Equals("1"))
-            {
-                anchor.InnerText = ha.send + "like your page!";
-            }
 
-            li.Controls.Add(anchor);
+            li.Controls.Add(butt);
             tabs.Controls.Add(li);
+        }
+        protected void ho_Click(object sender, EventArgs e)
+        {
+            
+            //cannot get button id
+            Button clickedButton = (Button)sender;
+            //clickedButton.Text = "...button clicked...";
+            
+            clickedButton.BackColor = Color.Beige;
+            //sql update UPDATE [dbo].[notification] set status = 'yes' WHERE id =12;
+            using (SqlConnection connection = new
+   SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+   "NotificationConnectionString1"].ConnectionString))
+            {
+
+                connection.Open();
+                String query;
+                query = " UPDATE [dbo].[notification] set status = 'yes' WHERE id =" +  xxxx;
+                SqlCommand cc = new SqlCommand(query, connection);
+                cc.ExecuteNonQuery();
+                connection.Close();
+            }
         }
         public void MsgBox(String msg)
         {

@@ -38,38 +38,56 @@ namespace ASPJ
             MsgBox("you liked this page!");
            
         }
+        protected void purchaseb_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection123 = new
+        SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+        "NotificationConnectionString1"].ConnectionString))
+            {
+                connection123.Open();
+                SqlCommand command = new SqlCommand();
+
+                command.CommandText = "INSERT INTO [dbo].[notification] (sender,receiver,filename,type,status) VALUES (@1,@2,@3,@4,@5);";
+                command.Parameters.Add(new SqlParameter("@1", session.SName));
+                command.Parameters.Add(new SqlParameter("@2", Itemowner.Text));
+                command.Parameters.Add(new SqlParameter("@3", "gg page"));
+                command.Parameters.Add(new SqlParameter("@4", "2"));
+                command.Parameters.Add(new SqlParameter("@5", "no"));
+                command.Connection = connection123;
+
+                command.ExecuteNonQuery();
+                connection123.Close();
+            }
+        }
+
         public void MsgBox(String msg)
         {
             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
         }
+
+        protected void commb_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection123 = new
+        SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+        "NotificationConnectionString1"].ConnectionString))
+            {
+                connection123.Open();
+                SqlCommand command = new SqlCommand();
+
+                command.CommandText = "INSERT INTO [dbo].[notification] (sender,receiver,filename,type,status) VALUES (@1,@2,@3,@4,@5);";
+                command.Parameters.Add(new SqlParameter("@1", session.SName));
+                command.Parameters.Add(new SqlParameter("@2", Itemowner.Text));
+                command.Parameters.Add(new SqlParameter("@3", "gg page"));
+                command.Parameters.Add(new SqlParameter("@4", "3"));
+                command.Parameters.Add(new SqlParameter("@5", "no"));
+                command.Connection = connection123;
+
+                command.ExecuteNonQuery();
+                connection123.Close();
+            }
+        }
     }
 
-//    protected void likeb_Click(object sender, EventArgs e)
-//    {
-//        String la = Label3.Text;
-//        MsgBox(session.SName);
-//        using (SqlConnection connection123 = new
-//SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
-//"NotificationConnectionString1"].ConnectionString))
-//        {
-//            connection123.Open();
-//            SqlCommand command = new SqlCommand();
-
-//            command.CommandText = "INSERT INTO [dbo].[Notification] (Type, Sender,Receiver,Message,Status) VALUES (@0,@1,@2,@3,@4);";
-//            command.Parameters.Add(new SqlParameter("@0", 1));
-//            command.Parameters.Add(new SqlParameter("@1", session.SName));
-//            command.Parameters.Add(new SqlParameter("@2", "JC"));
-//            command.Parameters.Add(new SqlParameter("@3", ""));
-//            command.Parameters.Add(new SqlParameter("@4", "No"));
-
-//            command.Connection = connection123;
-
-//            command.ExecuteNonQuery();
-//            connection123.Close();
-//        }
-//    }
-
-
-    
+   
     
 }
