@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -14,24 +15,42 @@ namespace ASPJ
 
     public partial class Notification : System.Web.UI.Page
     {
-        notify ha = new notify();
+
+        int a;
         protected void Page_Load(object sender, EventArgs e)
         {
             Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
-            lol();
-            
-        }
-        
+            if (IsPostBack)
+            {
 
-        protected void TimerforN_Tick(object sender, EventArgs e)
-        {
-            lol();
-            loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
+                string clicked = Request["__EVENTTARGET"];//contrl
+                if (clicked == "lala")
+                {
+                    string parameter = Request["__EVENTARGUMENT"]; // parameter
+
+                    MsgBox(parameter);
+                    lmao(parameter);
+                    getstuff();
+
+                }
+
+                
+            }
+            getstuff();
+
+        }       
+
+        //protected void TimerforN_Tick(object sender, EventArgs e)
+        //{
+        //    lol();
+        //    loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
    
 
-        }
-        public void lol()
+        //}
+        public void getstuff()
         {
+            tabs.Controls.Clear();
+            ArrayList list = new ArrayList();
             
             using (SqlConnection connection = new
    SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
@@ -39,44 +58,61 @@ namespace ASPJ
             {
 
                 connection.Open();
-                String query;
-                query = " SELECT sender,filename,type,id from [dbo].[notification]where receiver ='" + session.SName+"'";
-                SqlCommand cc = new SqlCommand(query, connection);
-                //cc.Parameters.AddWithValue("@1", Username.Text);
-                //cc.Parameters.AddWithValue("@2", Password.Text);
-                SqlDataAdapter da = new SqlDataAdapter(cc);
+                String query1 =" SELECT sender,filename,type,id,status from [dbo].[notification]where receiver ='" + session.SName + "'";
+                String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "'";
+                SqlCommand cc = new SqlCommand(query0, connection);
+                a= (int)(cc.ExecuteScalar());
+                
+                MsgBox(a.ToString());
+                SqlCommand cc1 = new SqlCommand(query1, connection);
+
+                SqlDataAdapter da = new SqlDataAdapter(cc1);
                 DataTable dt = new DataTable();
                 dt.Clear();
                 da.Fill(dt);
                 connection.Close();
-                ha.send = dt.Rows[0][0].ToString();
-                ha.filename = dt.Rows[0][1].ToString();
-                ha.type = dt.Rows[0][2].ToString();
-                ha.id = int.Parse(dt.Rows[0][3].ToString());
-                
+                for (int i = 0; i < this.a; i++)
+                {
+
+                    notify ha = new notify();
+                    ha.send = dt.Rows[i][0].ToString();
+                    ha.filename = dt.Rows[i][1].ToString();
+                    ha.type = dt.Rows[i][2].ToString();
+                    ha.id = int.Parse(dt.Rows[i][3].ToString());
+                    ha.status= dt.Rows[i][4].ToString();
+                    list.Add(ha);
+                    HtmlGenericControl li = new HtmlGenericControl("li");
+                    li.Attributes.Add("id", ha.id.ToString());
+                    li.Attributes.Add("onclick", "ha(this.id)");
+                    if (ha.status == "no")
+                    {
+                        li.Style.Add("background-color", "lightblue");
+                    }
+                    else
+                    {
+                        li.Style.Add("background-color", "#F5F5DC");
+                    }
+                    tabs.Controls.Add(li);
+                    HtmlGenericControl h5 = new HtmlGenericControl("h5");
+                    h5.InnerText = ha.send + " purchased your product.";
+                    li.Controls.Add(h5);
+                    //Button butt = new Button();
+                    //butt.ID = ha.id.ToString();
+                    //butt.Text = "Delete this button";
+                    //butt.Click += new EventHandler(this.ho_Click);
+                    //li.Controls.Add(butt);
+                }
             }
 
-            HtmlGenericControl li = new HtmlGenericControl("li");
-            li.Attributes.Add("id","yaa");
-            li.Attributes.Add("class", "ya");
-            Button butt = new Button();
-            butt.Attributes.Add("id", ha.id.ToString());
-            butt.BackColor = Color.FromArgb(66, 134, 244);
-            butt.Text= Server.HtmlEncode(ha.send + " like your page!");
-            butt.Click += new EventHandler(this.ho_Click);
 
-
-            li.Controls.Add(butt);
-            tabs.Controls.Add(li);
         }
-        protected void ho_Click(object sender, EventArgs e)
+       
+        protected void lmao(String id)
         {
             
-            //cannot get button id
-            Button clickedButton = (Button)sender;
-            //clickedButton.Text = "...button clicked...";
             
-            clickedButton.BackColor = Color.Beige;
+            
+
             //sql update UPDATE [dbo].[notification] set status = 'yes' WHERE id =12;
             using (SqlConnection connection = new
    SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
@@ -85,7 +121,7 @@ namespace ASPJ
 
                 connection.Open();
                 String query;
-                query = " UPDATE [dbo].[notification] set status = 'yes' WHERE id =" +  xxxx;
+                query = " UPDATE [dbo].[notification] set status = 'yes' WHERE id =" + id;
                 SqlCommand cc = new SqlCommand(query, connection);
                 cc.ExecuteNonQuery();
                 connection.Close();

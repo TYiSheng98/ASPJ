@@ -23,5 +23,19 @@ namespace ASPJ
         {
             Response.Redirect("Page.aspx");
         }
+        protected void DoMyOnClickCall(object sender, EventArgs e)
+        {
+            MsgBox("HOOOO");
+        }
+        public void MsgBox(String msg)
+        {
+            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Button D = (Button)sender;
+            MsgBox(D.ID);
+        }
     }
 }
