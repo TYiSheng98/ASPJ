@@ -33,20 +33,30 @@ namespace ASPJ
                     getstuff();
 
                 }
+                else if (clicked == "haha")
+                {
+                    string parameter = Request["__EVENTARGUMENT"]; // parameter
 
-                
+                    MsgBox(parameter);
+
+                 
+                }
+
+
+
             }
             getstuff();
 
-        }       
+        }
 
-        //protected void TimerforN_Tick(object sender, EventArgs e)
-        //{
-        //    lol();
-        //    loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
-   
+        protected void TimerforN_Tick(object sender, EventArgs e)
+        {
+            getstuff();
+            
+            loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
 
-        //}
+
+        }
         public void getstuff()
         {
             tabs.Controls.Clear();
@@ -58,12 +68,26 @@ namespace ASPJ
             {
 
                 connection.Open();
-                String query1 =" SELECT sender,filename,type,id,status from [dbo].[notification]where receiver ='" + session.SName + "'";
+                String query1 =" SELECT sender,filename,type,id,status,message,timepost from [dbo].[notification]where receiver ='" + session.SName + "' order by id desc";
                 String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "'";
+                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
                 SqlCommand cc = new SqlCommand(query0, connection);
                 a= (int)(cc.ExecuteScalar());
-                
-                MsgBox(a.ToString());
+                SqlCommand q = new SqlCommand(query2, connection);
+                int newnotify = (int)(q.ExecuteScalar());
+                if (newnotify > 1)
+                {
+                    header.InnerText = "You have " + newnotify + " unread/new notifications!";
+                }
+                else if (newnotify == 1)
+                {
+                    header.InnerText = "You have " + newnotify + " unread/new notification!";
+                }
+                else
+                    header.InnerText = "You have no unread/new notifications!";
+
+                //MsgBox("You have no new notifications!");
+                //header.InnerText = "You have " + newnotify + " unread notifications!";
                 SqlCommand cc1 = new SqlCommand(query1, connection);
 
                 SqlDataAdapter da = new SqlDataAdapter(cc1);
@@ -80,33 +104,91 @@ namespace ASPJ
                     ha.type = dt.Rows[i][2].ToString();
                     ha.id = int.Parse(dt.Rows[i][3].ToString());
                     ha.status= dt.Rows[i][4].ToString();
+                    ha.msg = dt.Rows[i][5].ToString();
+                    ha.datet = dt.Rows[i][6].ToString();
                     list.Add(ha);
                     HtmlGenericControl li = new HtmlGenericControl("li");
                     li.Attributes.Add("id", ha.id.ToString());
-                    li.Attributes.Add("onclick", "ha(this.id)");
+                    
                     if (ha.status == "no")
                     {
                         li.Style.Add("background-color", "lightblue");
+                        li.Attributes.Add("onclick", "ha(this.id)");
                     }
                     else
                     {
                         li.Style.Add("background-color", "#F5F5DC");
                     }
                     tabs.Controls.Add(li);
+                    HtmlGenericControl h6 = new HtmlGenericControl("h6");
+                    DateTime datetime = DateTime.Parse(ha.datet);
+
+                    h6.InnerHtml = TimeAgo(datetime);
+                    li.Controls.Add(h6);
+
                     HtmlGenericControl h5 = new HtmlGenericControl("h5");
-                    h5.InnerText = ha.send + " purchased your product.";
+                    HtmlGenericControl s0 = new HtmlGenericControl("span");
+                    h5.Controls.Add(s0);
+                    HtmlGenericControl s1 = new HtmlGenericControl("span");
+                    HtmlGenericControl a = new HtmlGenericControl("a");
+                    a.Attributes.Add("href", "google.com" );
+                    a.InnerHtml = ha.send;
+                    s0.Controls.Add(s1);
+                    s1.Controls.Add(a);
+                    HtmlGenericControl s2 = new HtmlGenericControl("span");
+                    s0.Controls.Add(s2);
+                    if (ha.type == "1")
+                    {
+                        //h5.InnerText = ha.send + " purchased your product.";
+                        s2.InnerHtml= " purchased your product(" + ha.filename+")";
+                    }
+                    else if (ha.type == "2")
+                    {
+                        //h5.InnerText = ha.send + " commissioned your product.";
+                        s2.InnerHtml= " commissioned your product(" + ha.filename + ")";
+                    }
+                    else if (ha.type == "3")
+                    {
+                        //h5.InnerText = ha.send + " commented '" + ha.msg + "' at " + ha.filename;
+                        s2.InnerHtml= " commented '" + ha.msg + "' on your product(" + ha.filename + ")";
+                    }
+
+
                     li.Controls.Add(h5);
-                    //Button butt = new Button();
+                    //HtmlGenericControl br = new HtmlGenericControl("br");
+                    //li.Controls.Add(br);
+                    //HtmlGenericControl butt = new HtmlGenericControl("input");
                     //butt.ID = ha.id.ToString();
-                    //butt.Text = "Delete this button";
-                    //butt.Click += new EventHandler(this.ho_Click);
+                    //butt.Attributes.Add("type", "button");
+                    //butt.InnerHtml = "Delete this notification";
+                    ////butt.Click += new EventHandler(this.ho_Click);
+                    //butt.Attributes.Add("onclick", "del(this.id)");
                     //li.Controls.Add(butt);
                 }
             }
 
 
         }
-       
+        //protected void ho_Click(object sender, EventArgs e)
+        //{
+        //    Button d = (Button)sender;
+        //    MsgBox(d.ID);
+        //}
+        public void delete(String id)
+        {
+            using (SqlConnection connection = new
+  SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+  "NotificationConnectionString1"].ConnectionString))
+            {
+
+                connection.Open();
+                String query;
+                query = " DELETE from [dbo].[notification]  WHERE id =" + id;
+                SqlCommand cc = new SqlCommand(query, connection);
+                cc.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
         protected void lmao(String id)
         {
             
@@ -130,6 +212,48 @@ namespace ASPJ
         public void MsgBox(String msg)
         {
             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
+        }
+        public string TimeAgo(DateTime dateTime)
+        {
+            string result = string.Empty;
+            var timeSpan = DateTime.Now.Subtract(dateTime);
+
+            if (timeSpan <= TimeSpan.FromSeconds(60))
+            {
+                result = string.Format("{0} seconds ago", timeSpan.Seconds);
+            }
+            else if (timeSpan <= TimeSpan.FromMinutes(60))
+            {
+                result = timeSpan.Minutes > 1 ?
+                    String.Format("about {0} minutes ago", timeSpan.Minutes) :
+                    "about a minute ago";
+            }
+            else if (timeSpan <= TimeSpan.FromHours(24))
+            {
+                result = timeSpan.Hours > 1 ?
+                    String.Format("about {0} hours ago", timeSpan.Hours) :
+                    "about an hour ago";
+            }
+            else if (timeSpan <= TimeSpan.FromDays(30))
+            {
+                result = timeSpan.Days > 1 ?
+                    String.Format("about {0} days ago", timeSpan.Days) :
+                    "yesterday";
+            }
+            else if (timeSpan <= TimeSpan.FromDays(365))
+            {
+                result = timeSpan.Days > 30 ?
+                    String.Format("about {0} months ago", timeSpan.Days / 30) :
+                    "about a month ago";
+            }
+            else
+            {
+                result = timeSpan.Days > 365 ?
+                    String.Format("about {0} years ago", timeSpan.Days / 365) :
+                    "about a year ago";
+            }
+
+            return result;
         }
     }
 }

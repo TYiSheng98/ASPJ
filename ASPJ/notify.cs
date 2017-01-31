@@ -14,6 +14,7 @@ namespace ASPJ
         public String status { get; set; }
         public String type { get; set; }
         public int id { get; set; }
+        public String datet { get; set; }
         public notify()
         {
             this.send = send;
@@ -22,6 +23,7 @@ namespace ASPJ
             this.status = status;
             this.type = type;
             this.id = id;
+            this.datet = datet;
         }
 
     }

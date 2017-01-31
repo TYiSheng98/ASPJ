@@ -5,8 +5,8 @@
         .l li h5{ position:relative;top:20%;font-size:1.5em;text-align:center;}
     </style>
     
-    <ul class="l">
-        <li  id="oo" runat="server" onclick> 
+    <ul class="l" runat="server" id="hi">
+        <li  id="oo" runat="server" > 
             <h5>Someone purchased your product </h5>
         </li>
         <li> 
@@ -14,6 +14,9 @@
         </li>
         <li> 
             <h5>Someone purchased your product </h5>
+        </li>
+        <li>
+            <a href="google.com" />
         </li>
     </ul>
 </asp:Content>
