@@ -33,14 +33,14 @@ namespace ASPJ
                     getstuff();
 
                 }
-                else if (clicked == "haha")
-                {
-                    string parameter = Request["__EVENTARGUMENT"]; // parameter
+                //else if (clicked == "haha")
+                //{
+                //    string parameter = Request["__EVENTARGUMENT"]; // parameter
 
-                    MsgBox(parameter);
+                //    MsgBox(parameter);
 
                  
-                }
+                //}
 
 
 
@@ -120,12 +120,12 @@ namespace ASPJ
                     
                     if (ha.status == "no")
                     {
-                        li.Style.Add("background-color", "lightblue");
+                        li.Style.Add("background-color", "#ffe0b3");
                         
                     }
                     else
                     {
-                        li.Style.Add("background-color", "#F5F5DC");
+                        li.Style.Add("background-color", "lightblue");
                     }
                     li.Attributes.Add("onclick", "ha(" + ha.id.ToString() + "," + ha.CID + ")");
                     tabs.Controls.Add(li);
@@ -159,7 +159,7 @@ namespace ASPJ
                     else if (ha.type == "3")
                     {
                         //h5.InnerText = ha.send + " commented '" + ha.msg + "' at " + ha.filename;
-                        s2.InnerHtml= " commented '" + ha.msg + "' on your product ";
+                        s2.InnerHtml= " commented on your product ";
                     }
                     HtmlGenericControl s3 = new HtmlGenericControl("span");
                     HtmlGenericControl a1 = new HtmlGenericControl("a");

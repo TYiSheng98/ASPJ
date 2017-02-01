@@ -27,8 +27,8 @@
         function ha(clicked_id,cid) {
             //alert(clicked_id);
             var clicked = document.getElementById(clicked_id);
-            if (clicked.style.background != '#F5F5DC') {
-                clicked.style.background = '#F5F5DC';
+            if (clicked.style.background != '#ffe0b3') {
+                clicked.style.background = '#ffe0b3';
                 
                 __doPostBack('lala', clicked_id);
             }
@@ -36,10 +36,10 @@
                 window.open("/Page.aspx?cid=" + cid);
             }
         }
-           function del(ID){
-               var clicked = document.getElementById(ID);
-               __doPostBack('haha', ID);
-            }
+           //function del(ID){
+           //    var clicked = document.getElementById(ID);
+           //    __doPostBack('haha', ID);
+           // }
             
 
         
