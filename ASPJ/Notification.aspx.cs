@@ -28,7 +28,7 @@ namespace ASPJ
                 {
                     string parameter = Request["__EVENTARGUMENT"]; // parameter
 
-                    MsgBox(parameter);
+                    //MsgBox(parameter);
                     lmao(parameter);
                     getstuff();
 
@@ -68,13 +68,14 @@ namespace ASPJ
             {
 
                 connection.Open();
-                String query1 =" SELECT sender,filename,type,id,status,message,timepost from [dbo].[notification]where receiver ='" + session.SName + "' order by id desc";
+                String query1 =" SELECT sender,filename,type,id,status,message,timepost,commentid from [dbo].[notification]where receiver ='" + session.SName + "' order by id desc";
                 String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "'";
                 String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
                 SqlCommand cc = new SqlCommand(query0, connection);
                 a= (int)(cc.ExecuteScalar());
                 SqlCommand q = new SqlCommand(query2, connection);
                 int newnotify = (int)(q.ExecuteScalar());
+                counter.InnerHtml = newnotify.ToString();
                 if (newnotify > 1)
                 {
                     header.InnerText = "You have " + newnotify + " unread/new notifications!";
@@ -84,8 +85,12 @@ namespace ASPJ
                     header.InnerText = "You have " + newnotify + " unread/new notification!";
                 }
                 else
+                {
                     header.InnerText = "You have no unread/new notifications!";
+                    counter.InnerHtml = "";
+                }
 
+                
                 //MsgBox("You have no new notifications!");
                 //header.InnerText = "You have " + newnotify + " unread notifications!";
                 SqlCommand cc1 = new SqlCommand(query1, connection);
@@ -106,6 +111,9 @@ namespace ASPJ
                     ha.status= dt.Rows[i][4].ToString();
                     ha.msg = dt.Rows[i][5].ToString();
                     ha.datet = dt.Rows[i][6].ToString();
+                    ha.CID= dt.Rows[i][7].ToString();
+                    if (ha.CID == "")
+                        ha.CID = "0";
                     list.Add(ha);
                     HtmlGenericControl li = new HtmlGenericControl("li");
                     li.Attributes.Add("id", ha.id.ToString());
@@ -113,12 +121,13 @@ namespace ASPJ
                     if (ha.status == "no")
                     {
                         li.Style.Add("background-color", "lightblue");
-                        li.Attributes.Add("onclick", "ha(this.id)");
+                        
                     }
                     else
                     {
                         li.Style.Add("background-color", "#F5F5DC");
                     }
+                    li.Attributes.Add("onclick", "ha(" + ha.id.ToString() + "," + ha.CID + ")");
                     tabs.Controls.Add(li);
                     HtmlGenericControl h6 = new HtmlGenericControl("h6");
                     DateTime datetime = DateTime.Parse(ha.datet);
@@ -131,7 +140,7 @@ namespace ASPJ
                     h5.Controls.Add(s0);
                     HtmlGenericControl s1 = new HtmlGenericControl("span");
                     HtmlGenericControl a = new HtmlGenericControl("a");
-                    a.Attributes.Add("href", "google.com" );
+                    a.Attributes.Add("href", "user.aspx" );
                     a.InnerHtml = ha.send;
                     s0.Controls.Add(s1);
                     s1.Controls.Add(a);
@@ -140,19 +149,24 @@ namespace ASPJ
                     if (ha.type == "1")
                     {
                         //h5.InnerText = ha.send + " purchased your product.";
-                        s2.InnerHtml= " purchased your product(" + ha.filename+")";
+                        s2.InnerHtml= " purchased your product ";
                     }
                     else if (ha.type == "2")
                     {
                         //h5.InnerText = ha.send + " commissioned your product.";
-                        s2.InnerHtml= " commissioned your product(" + ha.filename + ")";
+                        s2.InnerHtml= " commissioned your product ";
                     }
                     else if (ha.type == "3")
                     {
                         //h5.InnerText = ha.send + " commented '" + ha.msg + "' at " + ha.filename;
-                        s2.InnerHtml= " commented '" + ha.msg + "' on your product(" + ha.filename + ")";
+                        s2.InnerHtml= " commented '" + ha.msg + "' on your product ";
                     }
-
+                    HtmlGenericControl s3 = new HtmlGenericControl("span");
+                    HtmlGenericControl a1 = new HtmlGenericControl("a");
+                    a1.Attributes.Add("href", "google.com");
+                    a1.InnerHtml = ha.filename;
+                    s0.Controls.Add(s3);
+                    s3.Controls.Add(a1);
 
                     li.Controls.Add(h5);
                     //HtmlGenericControl br = new HtmlGenericControl("br");
