@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Button ID="noti" runat="server" Text="Notification Page" OnClick="noti_Click" />
     
-    <asp:Button ID="p" runat="server" Text="Sample Page" OnClick="p_Click" />
+    <asp:Button ID="filepage" runat="server" Text="sample File Page" OnClick="filepage_Click" />
     
     
 </asp:Content>

@@ -22,12 +22,12 @@ namespace ASPJ {
         protected global::System.Web.UI.WebControls.Button noti;
         
         /// <summary>
-        /// p control.
+        /// filepage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button p;
+        protected global::System.Web.UI.WebControls.Button filepage;
     }
 }

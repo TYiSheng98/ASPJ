@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ASPJ.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -20,8 +23,12 @@ namespace ASPJ
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            //TestLabel.Text = session.SName;
-           
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(User.Identity.GetUserId());
+            session.SName = user.UserName.ToString();
+
+            
+
             Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
             if (IsPostBack)
             {
@@ -87,7 +94,7 @@ namespace ASPJ
             {
 
                 connection.Open();
-                String query1 =" SELECT sender,filename,type,id,status,message,timepost,commentid from [dbo].[notification]where receiver ='" + session.SName + "' order by id desc";
+                String query1 =" SELECT sender,filename,type,id,status,message,timepost,externalid from [dbo].[notification]where receiver ='" + session.SName + "' order by id desc";
                 String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "'";
                 String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
                 SqlCommand cc = new SqlCommand(query0, connection);
@@ -95,7 +102,7 @@ namespace ASPJ
                 //SqlCommand q = new SqlCommand(query2, connection);
                 //int newnotify = (int)(q.ExecuteScalar());
                 int count = getnotifycounter();
-                counter.InnerHtml = count.ToString();
+                //counter.InnerHtml = count.ToString();
                 if (count > 1)
                 {
                     header.InnerText = "You have " + count + " unread/new notifications!";
@@ -107,7 +114,7 @@ namespace ASPJ
                 else
                 {
                     header.InnerText = "You have no unread/new notifications!";
-                    counter.InnerHtml = "";
+                    //counter.InnerHtml = "";
                 }
 
                 
@@ -147,7 +154,7 @@ namespace ASPJ
                     {
                         li.Style.Add("background-color", "lightblue");
                     }
-                    li.Attributes.Add("onclick", "ha(" + ha.id.ToString() + "," + ha.CID + ")");
+                    li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ")");
                     tabs.Controls.Add(li);
                     HtmlGenericControl h6 = new HtmlGenericControl("h6");
                     DateTime datetime = DateTime.Parse(ha.datet);
@@ -174,7 +181,11 @@ namespace ASPJ
                     else if (ha.type == "2")
                     {
                         //h5.InnerText = ha.send + " commissioned your product.";
-                        s2.InnerHtml= " commissioned your product ";
+                        HtmlGenericControl a2 = new HtmlGenericControl("a");
+                        //need to integrate with kehui part
+                        a2.Attributes.Add("href", "Inbox.aspx");
+                        s2.Controls.Add(a2);
+                        s2.InnerHtml= " sent you a message regarding on ";
                     }
                     else if (ha.type == "3")
                     {

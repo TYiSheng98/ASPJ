@@ -13,15 +13,6 @@ namespace ASPJ {
     public partial class Notification {
         
         /// <summary>
-        /// counter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl counter;
-        
-        /// <summary>
         /// Refresh control.
         /// </summary>
         /// <remarks>
@@ -31,13 +22,13 @@ namespace ASPJ {
         protected global::System.Web.UI.UpdatePanel Refresh;
         
         /// <summary>
-        /// loop control.
+        /// TimerforN control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label loop;
+        protected global::System.Web.UI.Timer TimerforN;
         
         /// <summary>
         /// header control.
@@ -56,6 +47,15 @@ namespace ASPJ {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tabs;
+        
+        /// <summary>
+        /// loop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label loop;
         
         /// <summary>
         /// Inital control.

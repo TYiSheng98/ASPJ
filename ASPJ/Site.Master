@@ -16,7 +16,7 @@
 
 </head>
 <body>
-    <form runat="server">
+    <form runat="server" id="GG">
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -63,8 +63,9 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
+                                <%--<li class="active" "><a href="#">Home <span id="b1" runat="server" class="badge">42</span></a></li>--%>
                                 <li><a runat="server" href="~/Notification" id="haha">
-                                    <span class="glyphicon-bell" runat="server"><asp:Label runat="server" id="Note" />
+                                    <span class="glyphicon-bell" runat="server" id="b1" style="font-size: large;" ><asp:Label runat="server" id="Note"  />
                                        
                      <%--<span class="count" id="counter" runat="server"></span>--%>
                  </span></a></li>

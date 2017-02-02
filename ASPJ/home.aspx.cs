@@ -25,9 +25,9 @@ namespace ASPJ
             Response.Redirect("Notification.aspx");
         }
 
-        protected void p_Click(object sender, EventArgs e)
+        protected void filepage_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Page.aspx");
+            Response.Redirect("Page(YS).aspx");
         }
         protected void DoMyOnClickCall(object sender, EventArgs e)
         {

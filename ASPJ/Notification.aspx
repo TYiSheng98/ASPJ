@@ -19,13 +19,13 @@
         .a{cursor:pointer;}
     </style>
     <%--insert the icon as button when integerated--%>
-    <div class="a">
-                 <span class="glyphicon-bell h">
-                     <span class="count" id="counter" runat="server"></span>
-                 </span>
-            </div>
+    
     <script>
-        function ha(clicked_id,cid) {
+        <%--var icon = document.getElementById('<%=((Label)Master.FindControl("Note")).ClientID %>').innerHTML;
+        alert(icon);--%>
+        //var t = document.createTextNode("1");
+        //icon.appendchild(t);
+        function CLICK(clicked_id,type ,cid) {
             //alert(clicked_id);
             var clicked = document.getElementById(clicked_id);
             if (clicked.style.background != '#ffe0b3') {
@@ -33,8 +33,13 @@
                 
                 __doPostBack('lala', clicked_id);
             }
-            if (cid !== 0) {
-                window.open("/Page.aspx?cid=" + cid);
+            //link to jc comment
+            if (type == "3") {
+                //alert(cid);
+                window.open("/Page.aspx?externalid=" + cid);
+            }
+            else if (type == "2") {
+                window.open("/Inbox.aspx?externalid=" + cid);
             }
         }
            //function del(ID){
@@ -50,13 +55,17 @@
     <asp:UpdatePanel ID="Refresh" runat="server">
 
         <ContentTemplate>
-            
-            <%--<asp:Timer ID="TimerforN" runat="server" Interval="2000" OnTick="TimerforN_Tick"></asp:Timer>--%>
-            <asp:Label ID="loop" runat="server" Text=""></asp:Label>
+            <%--<div class="a">
+                 <span class="glyphicon-bell h">
+                     <span class="count" id="counter" runat="server"></span>
+                 </span>
+            </div>--%>
+            <asp:Timer ID="TimerforN" runat="server" Interval="5000" OnTick="TimerforN_Tick"></asp:Timer>
             <h1 id="header" runat="server"></h1>
             <ul runat="server" id="tabs"  class="l">
 
             </ul>
+            <asp:Label ID="loop" runat="server" Text=""></asp:Label>
 
         </ContentTemplate>
 

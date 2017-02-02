@@ -31,22 +31,22 @@ namespace ASPJ {
         protected global::System.Web.UI.WebControls.Label Session;
         
         /// <summary>
-        /// likeb control.
+        /// purchaseb control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button likeb;
+        protected global::System.Web.UI.WebControls.Button purchaseb;
         
         /// <summary>
-        /// commb control.
+        /// smsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button commb;
+        protected global::System.Web.UI.WebControls.Button smsg;
         
         /// <summary>
         /// TextBox1 control.

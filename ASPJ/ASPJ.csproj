@@ -188,7 +188,7 @@
     <Content Include="InvoiceHistory.aspx" />
     <Content Include="l.aspx" />
     <Content Include="Notification.aspx" />
-    <Content Include="Page.aspx" />
+    <Content Include="Page%28YS%29.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -408,12 +408,12 @@
       <DependentUpon>Notification.aspx</DependentUpon>
     </Compile>
     <Compile Include="notify.cs" />
-    <Compile Include="Page.aspx.cs">
-      <DependentUpon>Page.aspx</DependentUpon>
+    <Compile Include="Page%28YS%29.aspx.cs">
+      <DependentUpon>Page%28YS%29.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Page.aspx.designer.cs">
-      <DependentUpon>Page.aspx</DependentUpon>
+    <Compile Include="Page%28YS%29.aspx.designer.cs">
+      <DependentUpon>Page%28YS%29.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="session.cs" />
