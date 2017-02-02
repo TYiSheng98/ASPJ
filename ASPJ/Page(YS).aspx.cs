@@ -18,8 +18,10 @@ namespace ASPJ
         //well i dont know where to put this part at eugene codes...
         protected void purchaseb_Click(object sender, EventArgs e)
         {
-          
-            haha("1");
+            if (session.SName != Itemowner.Text)
+                haha("1");
+            else
+                Response.Redirect("error");
 
         }
         
@@ -31,7 +33,10 @@ namespace ASPJ
 
         protected void smsg_Click(object sender, EventArgs e)
         {
-            haha("2");
+            if (session.SName != Itemowner.Text)
+                haha("2");
+            else
+                Response.Redirect("error");
         }
         //method for type 1&2 need to insert externalid for type 2 
         public void haha(String type)
@@ -84,9 +89,15 @@ namespace ASPJ
 
         protected void CButton_Click(object sender, EventArgs e)
         {
-            haha("3", TextBox1.Text);
-            MsgBox("Sucess");
-            TextBox1.Text = "";
+
+            if (session.SName != Itemowner.Text)
+            {
+                haha("3", TextBox1.Text);
+                MsgBox("Sucess");
+                TextBox1.Text = "";
+            }
+            else
+                Response.Redirect("error");
         }
     }
 
