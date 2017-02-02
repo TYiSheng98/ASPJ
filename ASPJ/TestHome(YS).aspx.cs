@@ -28,10 +28,10 @@ namespace ASPJ
 
                     connection.Open();
                     String query;
-                    query = " SELECT username,password from [dbo].[user]where username =@1 and password =@2";
+                    query = " SELECT username,password from [dbo].[user]where username =@ID and password =@password";
                     SqlCommand cmd = new SqlCommand(query, connection);
-                    cmd.Parameters.AddWithValue("@1", Username.Text);
-                    cmd.Parameters.AddWithValue("@2", Password.Text);
+                    cmd.Parameters.AddWithValue("@ID", Username.Text);
+                    cmd.Parameters.AddWithValue("@password", Password.Text);
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     dt.Clear();

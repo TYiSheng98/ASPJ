@@ -185,6 +185,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="home.aspx" />
+    <Content Include="InvoiceHistory.aspx" />
     <Content Include="l.aspx" />
     <Content Include="Notification.aspx" />
     <Content Include="Page.aspx" />
@@ -383,6 +384,13 @@
     </Compile>
     <Compile Include="home.aspx.designer.cs">
       <DependentUpon>home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceHistory.aspx.cs">
+      <DependentUpon>InvoiceHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InvoiceHistory.aspx.designer.cs">
+      <DependentUpon>InvoiceHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="l.aspx.cs">
       <DependentUpon>l.aspx</DependentUpon>

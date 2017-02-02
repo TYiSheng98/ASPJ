@@ -12,7 +12,7 @@ namespace ASPJ
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session.Text = session.SName;
+            //Session.Text = session.SName;
         }
 
         protected void likeb_Click(object sender, EventArgs e)

@@ -17,8 +17,11 @@ namespace ASPJ
     {
 
         int a;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
+            //TestLabel.Text = session.SName;
+           
             Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
             if (IsPostBack)
             {
@@ -29,8 +32,8 @@ namespace ASPJ
                     string parameter = Request["__EVENTARGUMENT"]; // parameter
 
                     //MsgBox(parameter);
-                    lmao(parameter);
-                    getstuff();
+                    updatestatus(parameter);
+                    getnotifications();
 
                 }
                 //else if (clicked == "haha")
@@ -45,19 +48,35 @@ namespace ASPJ
 
 
             }
-            getstuff();
+            getnotifications();
 
         }
 
         protected void TimerforN_Tick(object sender, EventArgs e)
         {
-            getstuff();
+            getnotifications();
             
             loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
 
 
         }
-        public void getstuff()
+        public int getnotifycounter()
+        {
+            int newnotify;
+            using (SqlConnection connection = new
+   SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+   "NotificationConnectionString1"].ConnectionString))
+            {
+                connection.Open();
+                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
+                SqlCommand q = new SqlCommand(query2, connection);
+                newnotify = (int)(q.ExecuteScalar());
+                connection.Close();
+                
+            }
+            return newnotify;
+        }
+        public void getnotifications()
         {
             tabs.Controls.Clear();
             ArrayList list = new ArrayList();
@@ -73,16 +92,17 @@ namespace ASPJ
                 String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
                 SqlCommand cc = new SqlCommand(query0, connection);
                 a= (int)(cc.ExecuteScalar());
-                SqlCommand q = new SqlCommand(query2, connection);
-                int newnotify = (int)(q.ExecuteScalar());
-                counter.InnerHtml = newnotify.ToString();
-                if (newnotify > 1)
+                //SqlCommand q = new SqlCommand(query2, connection);
+                //int newnotify = (int)(q.ExecuteScalar());
+                int count = getnotifycounter();
+                counter.InnerHtml = count.ToString();
+                if (count > 1)
                 {
-                    header.InnerText = "You have " + newnotify + " unread/new notifications!";
+                    header.InnerText = "You have " + count + " unread/new notifications!";
                 }
-                else if (newnotify == 1)
+                else if (count == 1)
                 {
-                    header.InnerText = "You have " + newnotify + " unread/new notification!";
+                    header.InnerText = "You have " + count + " unread/new notification!";
                 }
                 else
                 {
@@ -203,7 +223,7 @@ namespace ASPJ
                 connection.Close();
             }
         }
-        protected void lmao(String id)
+        protected void updatestatus(String id)
         {
             
             

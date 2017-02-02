@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Notification.aspx.cs" Inherits="ASPJ.Notification" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <%--<asp:Button ID="Button1" runat="server" Text="Like gg page" />--%>
@@ -63,4 +64,7 @@
 
     </asp:UpdatePanel>
     <asp:Label ID="Inital" runat="server" Text="Label"></asp:Label>
+    <br />
+    <br />
+    <%--<asp:Label ID="TestLabel" runat="server" Text="Label"></asp:Label>--%>
     </asp:Content>

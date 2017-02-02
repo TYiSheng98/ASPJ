@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ASPJ.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +14,10 @@ namespace ASPJ
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(User.Identity.GetUserId());
+            session.SName = user.UserName.ToString();
+            
         }
 
         protected void noti_Click(object sender, EventArgs e)
@@ -37,5 +43,6 @@ namespace ASPJ
             Button D = (Button)sender;
             MsgBox(D.ID);
         }
+        
     }
 }
