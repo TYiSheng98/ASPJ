@@ -12,12 +12,11 @@ namespace ASPJ
 {
     public partial class home : System.Web.UI.Page
     {
-        String k;
         protected void Page_Load(object sender, EventArgs e)
         {
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(User.Identity.GetUserId());
-            k = user.UserName.ToString();
+            session.SName = user.UserName.ToString();
             
         }
 

@@ -53,7 +53,7 @@ namespace ASPJ
                     if (Username.Text.Equals(ID) && Password.Text.Equals(password))
                     {
                         Session["ID"] = ID;
-                        //GetCounter.SName = (String)Session["ID"];
+                        session.SName = (String)Session["ID"];
 
                         Response.Redirect("home.aspx");
 

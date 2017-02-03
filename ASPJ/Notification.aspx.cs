@@ -20,20 +20,21 @@ namespace ASPJ
     {
 
         int a;
-        String name;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(User.Identity.GetUserId());
-             name = user.UserName.ToString();
-            //MsgBox(name);
+            session.SName = user.UserName.ToString();
+
+            
 
             Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
             if (IsPostBack)
             {
 
-                string click = Request["__EVENTTARGET"];//contrl
-                if (click == "lala")
+                string clicked = Request["__EVENTTARGET"];//contrl
+                if (clicked == "lala")
                 {
                     string parameter = Request["__EVENTARGUMENT"]; // parameter
 
@@ -74,7 +75,7 @@ namespace ASPJ
    "NotificationConnectionString1"].ConnectionString))
             {
                 connection.Open();
-                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + name + "' and status='no'";
+                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
                 SqlCommand q = new SqlCommand(query2, connection);
                 newnotify = (int)(q.ExecuteScalar());
                 connection.Close();
@@ -93,15 +94,14 @@ namespace ASPJ
             {
 
                 connection.Open();
-                String query1 =" SELECT sender,filename,type,id,status,message,timepost,externalid from [dbo].[notification]where receiver ='" + name + "' order by id desc";
-                String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + name + "'";
-                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + name + "' and status='no'";
+                String query1 =" SELECT sender,filename,type,id,status,message,timepost,externalid from [dbo].[notification]where receiver ='" + session.SName + "' order by id desc";
+                String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "'";
+                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
                 SqlCommand cc = new SqlCommand(query0, connection);
                 a= (int)(cc.ExecuteScalar());
                 //SqlCommand q = new SqlCommand(query2, connection);
                 //int newnotify = (int)(q.ExecuteScalar());
                 int count = getnotifycounter();
-                NO.Value = count.ToString();
                 //counter.InnerHtml = count.ToString();
                 if (count > 1)
                 {
@@ -200,7 +200,15 @@ namespace ASPJ
                     s3.Controls.Add(a1);
 
                     li.Controls.Add(h5);
-                   
+                    //HtmlGenericControl br = new HtmlGenericControl("br");
+                    //li.Controls.Add(br);
+                    //HtmlGenericControl butt = new HtmlGenericControl("input");
+                    //butt.ID = ha.id.ToString();
+                    //butt.Attributes.Add("type", "button");
+                    //butt.InnerHtml = "Delete this notification";
+                    ////butt.Click += new EventHandler(this.ho_Click);
+                    //butt.Attributes.Add("onclick", "del(this.id)");
+                    //li.Controls.Add(butt);
                 }
             }
 
@@ -250,7 +258,6 @@ namespace ASPJ
         {
             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
         }
-        
         public string TimeAgo(DateTime dateTime)
         {
             string result = string.Empty;

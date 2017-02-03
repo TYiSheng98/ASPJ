@@ -18,18 +18,13 @@
         .count{position: relative;left: -5px;top:5px;}
         .a{cursor:pointer;}
     </style>
-    <asp:HiddenField runat="server" id="NO"></asp:HiddenField>
     <%--insert the icon as button when integerated--%>
+    
     <script>
         <%--var icon = document.getElementById('<%=((Label)Master.FindControl("Note")).ClientID %>').innerHTML;
         alert(icon);--%>
         //var t = document.createTextNode("1");
         //icon.appendchild(t);
-        
-        if (document.getElementById("<%= NO.ClientID %>").value > "0") {
-            document.getElementById("Span1").innerHTML = document.getElementById("<%= NO.ClientID %>").value;
-        }
-        
         function CLICK(clicked_id,type ,cid) {
             //alert(clicked_id);
             var clicked = document.getElementById(clicked_id);

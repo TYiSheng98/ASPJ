@@ -23,21 +23,21 @@ namespace ASPJ
             {
 
                 connection.Open();
-                //String query1 = " SELECT  from [dbo].[Invoices]where userid ='" + GetCounter.SName;
-                //String query0 = " SELECT count(*) from [dbo].[Invoices]where receiver ='" + GetCounter.SName + "'";
+                String query1 = " SELECT  from [dbo].[Invoices]where userid ='" + session.SName;
+                String query0 = " SELECT count(*) from [dbo].[Invoices]where receiver ='" + session.SName + "'";
                 //String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + session.SName + "' and status='no'";
-                //SqlCommand cc = new SqlCommand(query0, connection);
+                SqlCommand cc = new SqlCommand(query0, connection);
 
 
 
                 //MsgBox("You have no new notifications!");
                 //header.InnerText = "You have " + newnotify + " unread notifications!";
-                //SqlCommand cc1 = new SqlCommand(query1, connection);
+                SqlCommand cc1 = new SqlCommand(query1, connection);
 
-                //SqlDataAdapter da = new SqlDataAdapter(cc1);
+                SqlDataAdapter da = new SqlDataAdapter(cc1);
                 DataTable dt = new DataTable();
                 dt.Clear();
-                //da.Fill(dt);
+                da.Fill(dt);
                 connection.Close();
             }
         }
