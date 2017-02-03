@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Page(YS).aspx.cs" Inherits="ASPJ.Page" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%-- below is put File owner @ file name--%>
-    <asp:Label ID="Itemowner" runat="server" Text="w@g.com"></asp:Label>
+    <asp:Label ID="Itemowner" runat="server" Text="3185322e-a097-4535-9dd5-dcda559fb58e"></asp:Label>
     <asp:Label ID="Session" runat="server" ></asp:Label>
     <%--payment part--%>
     <asp:Button ID="purchaseb" runat="server" Text="Purchase this Item!" OnClick="purchaseb_Click" BackColor="#99CCFF" />
