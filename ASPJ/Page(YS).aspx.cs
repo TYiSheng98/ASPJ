@@ -13,13 +13,13 @@ namespace ASPJ
 {
     public partial class Page : System.Web.UI.Page
     {
-        String userid;
+        String name;
         protected void Page_Load(object sender, EventArgs e)
         {
             //Session.Text = name;
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(User.Identity.GetUserId());
-            userid = user.Id;
+            name = user.UserName.ToString();
             //MsgBox(name);
         }
        
@@ -27,7 +27,7 @@ namespace ASPJ
         //well i dont namenow where to put this part at eugene codes...
         protected void purchaseb_Click(object sender, EventArgs e)
         {
-            if (userid == Itemowner.Text)
+            if (name == Itemowner.Text)
             {
 
                 //MsgBox("same name");
@@ -50,7 +50,7 @@ namespace ASPJ
 
         protected void smsg_Click(object sender, EventArgs e)
         {
-            if (userid == Itemowner.Text)
+            if (name == Itemowner.Text)
             {
 
                 //MsgBox("same name");
@@ -74,7 +74,7 @@ namespace ASPJ
                 SqlCommand command = new SqlCommand();
 
                 command.CommandText = "INSERT INTO [dbo].[notification] (sender,receiver,filename,type,status,timepost) VALUES (@1,@2,@3,@4,@5,@6);";
-                command.Parameters.Add(new SqlParameter("@1", userid));
+                command.Parameters.Add(new SqlParameter("@1", name));
                 command.Parameters.Add(new SqlParameter("@2", Itemowner.Text));
                 //below is file name/page
                 command.Parameters.Add(new SqlParameter("@3", "SHIT"));
@@ -98,7 +98,7 @@ namespace ASPJ
                 SqlCommand command = new SqlCommand();
                 //need to insert review/comment ID from JC
                 command.CommandText = "INSERT INTO [dbo].[notification] (sender,receiver,filename,type,status,message,timepost) VALUES (@1,@2,@3,@4,@5,@6,@7);";
-                command.Parameters.Add(new SqlParameter("@1", userid));
+                command.Parameters.Add(new SqlParameter("@1", name));
                 command.Parameters.Add(new SqlParameter("@2", Itemowner.Text));
                 command.Parameters.Add(new SqlParameter("@3", "SHIT"));
                 command.Parameters.Add(new SqlParameter("@4", type));
@@ -115,7 +115,7 @@ namespace ASPJ
         protected void CButton_Click(object sender, EventArgs e)
         {
 
-            if (userid == Itemowner.Text)
+            if (name == Itemowner.Text)
             {
 
                 //MsgBox("same name");
