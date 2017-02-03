@@ -38,5 +38,10 @@
             </p>
         </div>
     </div>
-
+    <asp:HiddenField ID="NO" runat="server" />
+    <script>
+        if (document.getElementById("<%= NO.ClientID %>").value > "0") {
+           document.getElementById("Span1").innerHTML = document.getElementById("<%= NO.ClientID %>").value;
+        }
+    </script>
 </asp:Content>
