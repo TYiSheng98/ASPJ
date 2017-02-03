@@ -13,16 +13,19 @@ namespace ASPJ
 {
     public partial class _Default : System.Web.UI.Page
     {
-        String name;
+        String userid;
         protected void Page_Load(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(User.Identity.GetUserId());
-             name = user.UserName.ToString();
+            bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (val1 == true)
+            {
+                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser user = manager.FindById(User.Identity.GetUserId());
+                userid = user.Id;
 
-            int count = getnotifycounter(name);
-            NO.Value = count.ToString();
-
+                int count = getnotifycounter(userid);
+                NO.Value = count.ToString();
+            }
 
         }
 
@@ -30,7 +33,7 @@ namespace ASPJ
         {
             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
         }
-        public static int getnotifycounter(String SName)
+        public static int getnotifycounter(String SID)
         {
 
             int newnotify;
@@ -39,7 +42,7 @@ namespace ASPJ
    "NotificationConnectionString1"].ConnectionString))
             {
                 connection.Open();
-                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + SName + "' and status='no'";
+                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + SID + "' and status='no'";
                 SqlCommand q = new SqlCommand(query2, connection);
                 newnotify = (int)(q.ExecuteScalar());
                 connection.Close();
