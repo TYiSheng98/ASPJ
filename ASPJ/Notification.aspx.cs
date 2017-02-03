@@ -105,6 +105,7 @@ namespace ASPJ
                 //int newnotify = (int)(q.ExecuteScalar());
                 int count = getnotifycounter();
                 NO.Value = count.ToString();
+
                 //counter.InnerHtml = count.ToString();
                 if (count > 1)
                 {

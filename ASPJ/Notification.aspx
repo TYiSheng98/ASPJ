@@ -18,6 +18,7 @@
         .count{position: relative;left: -5px;top:5px;}
         .a{cursor:pointer;}
     </style>
+    <asp:HiddenField ID="NO" runat="server" />
     <%--insert the icon as button when integerated--%>
     
     <script>
@@ -25,6 +26,9 @@
         alert(icon);--%>
         //var t = document.createTextNode("1");
         //icon.appendchild(t);
+        if (document.getElementById("<%= NO.ClientID %>").value > "0") {
+           document.getElementById("Span1").innerHTML = document.getElementById("<%= NO.ClientID %>").value;
+        }
         function CLICK(clicked_id,type ,cid) {
             //alert(clicked_id);
             var clicked = document.getElementById(clicked_id);
@@ -47,9 +51,7 @@
            //    __doPostBack('haha', ID);
            // }
             
-
         
-
     </script>
    
     <asp:UpdatePanel ID="Refresh" runat="server">
@@ -66,7 +68,7 @@
 
             </ul>
             <asp:Label ID="loop" runat="server" Text=""></asp:Label>
-
+             
         </ContentTemplate>
 
 
