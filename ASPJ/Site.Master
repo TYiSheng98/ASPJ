@@ -66,7 +66,7 @@
                                 <%--<li class="active" "><a href="#">Home <span id="b1" runat="server" class="badge">42</span></a></li>--%>
                                 <li><a runat="server" href="~/Notification" id="haha">
                                     <span class="glyphicon-bell" runat="server" id="b1" style="font-size: large;" >
-                                        <span id="Span1" class="badge"></span>
+                                        <sub id="Span1" class="badge" style="left:-15px;"></sub>
                  </span></a></li>
                                 <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                 <li>

@@ -101,9 +101,8 @@ namespace ASPJ
    SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
    "NotificationConnectionString1"].ConnectionString))
             {
-
                 connection.Open();
-                String query1 =" SELECT sender,filename,type,id,status,message,timepost,externalid from [dbo].[notification]where receiver ='" + userid + "' order by id desc";
+                String query1 =" SELECT sender,filename,type,id,status,message,timepost,externalid,word from [dbo].[notification]where receiver ='" + userid + "' order by id desc";
                 String query0 = " SELECT count(*) from [dbo].[notification]where receiver ='" + userid + "'";
                 String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + userid + "' and status='no'";
                 
@@ -138,20 +137,25 @@ namespace ASPJ
                 dt.Clear();
                 da.Fill(dt);
                 connection.Close();
+                
                 for (int i = 0; i < this.a; i++)
                 {
 
                     notify ha = new notify();
-                    ha.send = dt.Rows[i][0].ToString();
-                    ha.filename = dt.Rows[i][1].ToString();
-                    ha.type = dt.Rows[i][2].ToString();
+                    ha.passwd = dt.Rows[i][8].ToString();
+                    ha.send = Cryptography_ys_.DecryptOfData(dt.Rows[i][0].ToString(), ha.passwd);
+                    ha.filename = Cryptography_ys_.DecryptOfData(dt.Rows[i][1].ToString(), ha.passwd);
+                    ha.type = Cryptography_ys_.DecryptOfData(dt.Rows[i][2].ToString(), ha.passwd);
                     ha.id = int.Parse(dt.Rows[i][3].ToString());
                     ha.status= dt.Rows[i][4].ToString();
-                    ha.msg = dt.Rows[i][5].ToString();
-                    ha.datet = dt.Rows[i][6].ToString();
-                    ha.CID= dt.Rows[i][7].ToString();
-                    if (ha.CID == "")
-                        ha.CID = "0";
+                    ha.msg = Cryptography_ys_.DecryptOfData(dt.Rows[i][5].ToString(), ha.passwd);
+                    ha.datet = Cryptography_ys_.DecryptOfData(dt.Rows[i][6].ToString(), ha.passwd);
+                    //GET FROM JC
+                    ha.EID= dt.Rows[i][7].ToString();
+                    if (ha.EID == "") {
+                        ha.EID = "0";
+                    }
+                   
                     list.Add(ha);
                     HtmlGenericControl li = new HtmlGenericControl("li");
                     li.Attributes.Add("id", ha.id.ToString());
@@ -165,7 +169,7 @@ namespace ASPJ
                     {
                         li.Style.Add("background-color", "lightblue");
                     }
-                    li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ")");
+                    li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.EID + ")");
                     tabs.Controls.Add(li);
                     HtmlGenericControl h6 = new HtmlGenericControl("h6");
                     DateTime datetime = DateTime.Parse(ha.datet);
