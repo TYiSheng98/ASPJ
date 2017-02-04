@@ -13,7 +13,7 @@ namespace ASPJ
 {
     public partial class _Default : System.Web.UI.Page
     {
-        String userid;
+        String userid;        
         protected void Page_Load(object sender, EventArgs e)
         {
             bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
@@ -22,9 +22,9 @@ namespace ASPJ
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser user = manager.FindById(User.Identity.GetUserId());
                 userid = user.Id;
-
+                
                 int count = getnotifycounter(userid);
-                NO.Value = count.ToString();
+                NO.Value = count.ToString();               
             }
 
         }
@@ -50,7 +50,7 @@ namespace ASPJ
             }
             return newnotify;
         }
-
+       
         //protected void RF_Tick(object sender, EventArgs e)
         //{
         //    int count = getnotifycounter(name);

@@ -23,39 +23,47 @@ namespace ASPJ
         String userid;
         protected void Page_Load(object sender, EventArgs e)
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(User.Identity.GetUserId());
-             //name = user.UserName.ToString();
-            userid = user.Id;
-            //MsgBox(name);
-
-            Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
-            if (IsPostBack)
+            bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (val1 == true)
             {
+                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser user = manager.FindById(User.Identity.GetUserId());
+                //name = user.UserName.ToString();
+                userid = user.Id;
+                //MsgBox(name);
 
-                string click = Request["__EVENTTARGET"];//contrl
-                if (click == "lala")
+                Inital.Text = "Page loaded at: " + DateTime.Now.ToLongTimeString();
+                if (IsPostBack)
                 {
-                    string parameter = Request["__EVENTARGUMENT"]; // parameter
 
-                    //MsgBox(parameter);
-                    updatestatus(parameter);
-                    getnotifications();
+                    string click = Request["__EVENTTARGET"];//contrl
+                    if (click == "lala")
+                    {
+                        string parameter = Request["__EVENTARGUMENT"]; // parameter
+
+                        //MsgBox(parameter);
+                        updatestatus(parameter);
+                        getnotifications();
+
+                    }
+                    //else if (clicked == "haha")
+                    //{
+                    //    string parameter = Request["__EVENTARGUMENT"]; // parameter
+
+                    //    MsgBox(parameter);
+
+
+                    //}
+
+
 
                 }
-                //else if (clicked == "haha")
-                //{
-                //    string parameter = Request["__EVENTARGUMENT"]; // parameter
-
-                //    MsgBox(parameter);
-
-                 
-                //}
-
-
-
+                getnotifications();
             }
-            getnotifications();
+            else
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
 
         }
 
@@ -108,15 +116,15 @@ namespace ASPJ
                 //counter.InnerHtml = count.ToString();
                 if (count > 1)
                 {
-                    header.InnerText = "You have " + count + " unread/new notifications!";
+                    header.InnerText = "You have " + count + " unread notifications!";
                 }
                 else if (count == 1)
                 {
-                    header.InnerText = "You have " + count + " unread/new notification!";
+                    header.InnerText = "You have " + count + " unread notification!";
                 }
                 else
                 {
-                    header.InnerText = "You have no unread/new notifications!";
+                    header.InnerText = "You have no unread notifications!";
                     //counter.InnerHtml = "";
                 }
 
@@ -306,6 +314,40 @@ namespace ASPJ
             }
 
             return result;
+        }
+
+        protected void DeleteB_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection = new
+  SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+  "NotificationConnectionString1"].ConnectionString))
+            {
+
+                connection.Open();
+                String query;
+                query = " DELETE  from [dbo].[notification]";
+                SqlCommand cc = new SqlCommand(query, connection);
+                cc.ExecuteNonQuery();
+                connection.Close();
+            }
+            Response.Redirect(Request.RawUrl);
+        }
+
+        protected void ALL_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection = new
+   SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+   "NotificationConnectionString1"].ConnectionString))
+            {
+
+                connection.Open();
+                String query;
+                query = " UPDATE [dbo].[notification] set status = 'yes' ";
+                SqlCommand cc = new SqlCommand(query, connection);
+                cc.ExecuteNonQuery();
+                connection.Close();
+            }
+            Response.Redirect(Request.RawUrl);
         }
     }
 }
