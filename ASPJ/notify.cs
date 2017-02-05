@@ -15,8 +15,7 @@ namespace ASPJ
         public String type { get; set; }
         public int id { get; set; }
         public String datet { get; set; }
-        public String EID { get; set; }
-        public String passwd { get; set; }
+        public String CID { get; set; }
         public notify()
         {
             this.send = send;
@@ -26,8 +25,7 @@ namespace ASPJ
             this.type = type;
             this.id = id;
             this.datet = datet;
-            this.EID = EID;
-            this.passwd = passwd;
+            this.CID = CID;
         }
 
     }
