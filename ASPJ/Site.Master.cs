@@ -7,6 +7,8 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using System.Data.SqlClient;
+using System.Web.UI.HtmlControls;
 
 namespace ASPJ
 {
@@ -69,7 +71,64 @@ namespace ASPJ
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (Context.User.Identity.IsAuthenticated)
+            {
+
+                int a = getnotifycounter(Context.User.Identity.Name);
+                if (a != 0)
+                {
+                    Label counter = (Label)LoginView1.FindControl("Span1");
+                    counter.Text = a.ToString();
+                }
+            }
+
+        }
+        protected void TimerforN_Tick(object sender, EventArgs e)
+        {
+            int a = getnotifycounter(Context.User.Identity.Name);
+            if (a != 0)
+            {
+                Label counter = (Label)LoginView1.FindControl("Span1");
+                counter.Text = a.ToString();
+            }
+
+
+
+        }
+        public void MsgBox(String msg)
+        {
+            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
+        }
+        public int getnotifycounter(String username)
+        {
+            String userid;
+            int newnotify;
+
+            using (SqlConnection connection = new
+SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+"DefaultConnection"].ConnectionString))
+            {
+                connection.Open();
+                String query3 = "SELECT Id from [dbo].[AspNetUsers]where UserName ='" + username + "'";
+                SqlCommand q = new SqlCommand(query3, connection);
+                userid = (String)(q.ExecuteScalar());
+
+                connection.Close();
+
+            }
+            using (SqlConnection connection = new
+SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+"NotificationConnectionString1"].ConnectionString))
+            {
+                connection.Open();
+
+                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + userid + "' and status='no'";
+                SqlCommand q1 = new SqlCommand(query2, connection);
+                newnotify = (int)(q1.ExecuteScalar());
+                connection.Close();
+
+            }
+            return newnotify;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

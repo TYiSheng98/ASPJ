@@ -23,8 +23,8 @@ namespace ASPJ
                 ApplicationUser user = manager.FindById(User.Identity.GetUserId());
                 userid = user.Id;
                 
-                int count = getnotifycounter(userid);
-                NO.Value = count.ToString();               
+                //int count = getnotifycounter(userid);
+                //NO.Value = count.ToString();               
             }
 
         }
@@ -33,23 +33,23 @@ namespace ASPJ
         {
             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language='javascript'>alert('" + msg + "')</script>");
         }
-        public static int getnotifycounter(String SID)
-        {
+   //     public static int getnotifycounter(String SID)
+   //     {
 
-            int newnotify;
-            using (SqlConnection connection = new
-   SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
-   "NotificationConnectionString1"].ConnectionString))
-            {
-                connection.Open();
-                String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + SID + "' and status='no'";
-                SqlCommand q = new SqlCommand(query2, connection);
-                newnotify = (int)(q.ExecuteScalar());
-                connection.Close();
+   //         int newnotify;
+   //         using (SqlConnection connection = new
+   //SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+   //"NotificationConnectionString1"].ConnectionString))
+   //         {
+   //             connection.Open();
+   //             String query2 = " SELECT count(*) from [dbo].[notification]where receiver ='" + SID + "' and status='no'";
+   //             SqlCommand q = new SqlCommand(query2, connection);
+   //             newnotify = (int)(q.ExecuteScalar());
+   //             connection.Close();
 
-            }
-            return newnotify;
-        }
+   //         }
+   //         return newnotify;
+   //     }
        
         //protected void RF_Tick(object sender, EventArgs e)
         //{

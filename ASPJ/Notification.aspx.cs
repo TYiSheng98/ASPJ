@@ -112,7 +112,7 @@ namespace ASPJ
                 //SqlCommand q = new SqlCommand(query2, connection);
                 //int newnotify = (int)(q.ExecuteScalar());
                 int count = getnotifycounter();
-                NO.Value = count.ToString();
+                
                 //counter.InnerHtml = count.ToString();
                 if (count > 1)
                 {
