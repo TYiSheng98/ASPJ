@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,7 +14,8 @@ namespace ASPJ
 {
     public partial class _Default : System.Web.UI.Page
     {
-        String userid;        
+        String userid;
+        //String key;      
         protected void Page_Load(object sender, EventArgs e)
         {
             bool val1 = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
@@ -22,10 +24,27 @@ namespace ASPJ
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser user = manager.FindById(User.Identity.GetUserId());
                 userid = user.Id;
-                
-                //int count = getnotifycounter(userid);
-                //NO.Value = count.ToString();               
-            }
+   //             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048);
+   //             key = rsa.ToXmlString(true);
+   //             using (SqlConnection connection = new
+   //SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings[
+   //"NotificationConnectionString1"].ConnectionString))
+   //             {
+   //                 connection.Open();
+
+   //                 SqlCommand q = new SqlCommand();
+
+   //                 q.CommandText = "INSERT INTO [dbo].[Sec] (userid,key) VALUES (@1,@2);";
+   //                 q.Parameters.Add(new SqlParameter("@1", userid));
+   //                 q.Parameters.Add(new SqlParameter("@2", key));
+   //                 q.ExecuteNonQuery();
+   //                 connection.Close();
+   //             }
+
+                    //         }
+                    //int count = getnotifycounter(userid);
+                    //NO.Value = count.ToString();               
+                }
 
         }
 

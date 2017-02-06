@@ -13,6 +13,15 @@ namespace ASPJ {
     public partial class Page {
         
         /// <summary>
+        /// filename control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl filename;
+        
+        /// <summary>
         /// Itemowner control.
         /// </summary>
         /// <remarks>
@@ -22,13 +31,13 @@ namespace ASPJ {
         protected global::System.Web.UI.WebControls.Label Itemowner;
         
         /// <summary>
-        /// Session control.
+        /// Itemownerid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Session;
+        protected global::System.Web.UI.WebControls.HiddenField Itemownerid;
         
         /// <summary>
         /// purchaseb control.
@@ -65,5 +74,14 @@ namespace ASPJ {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CButton;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
     }
 }

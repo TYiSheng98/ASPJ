@@ -13,21 +13,12 @@ namespace ASPJ {
     public partial class home {
         
         /// <summary>
-        /// noti control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button noti;
-        
-        /// <summary>
-        /// filepage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button filepage;
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }

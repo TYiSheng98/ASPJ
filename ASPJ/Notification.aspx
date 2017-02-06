@@ -90,9 +90,41 @@
         alert(icon);--%>
         //var t = document.createTextNode("1");
         //icon.appendchild(t);
-       <%-- if (document.getElementById("<%= NO.ClientID %>").value > "0") {
+        <%-- if (document.getElementById("<%= NO.ClientID %>").value > "0") {
             document.getElementById("Span1").innerHTML = document.getElementById("<%= NO.ClientID %>").value;
         }--%>
+        function CLICK1(clicked_id, type, cid,msg) {
+            //alert(clicked_id);
+            var m = msg;
+                var clicked = document.getElementById(clicked_id);
+                if (clicked.style.background != '#ffe0b3') {
+                    clicked.style.background = '#ffe0b3';
+
+                    __doPostBack('lala', clicked_id);
+                }
+                //link to jc comment
+                 if (type == "2") {
+                    window.open("/ViewMessage.aspx?msg=" + m);
+                }
+            
+        }
+        function CLICK2(clicked_id, type, cid, msg,sender) {
+            //alert(clicked_id);
+            var m = msg;
+            var clicked = document.getElementById(clicked_id);
+            if (clicked.style.background != '#ffe0b3') {
+                clicked.style.background = '#ffe0b3';
+
+                __doPostBack('lala', clicked_id);
+            }
+            //link to jc comment
+            if (type == "3") {
+                alert("Comment posted by " +sender+" : "+ msg);
+                //window.open("/Page(YS).aspx?externalid=" + cid);
+            }
+            
+
+        }
         function CLICK(clicked_id, type, cid) {
             //alert(clicked_id);
             var clicked = document.getElementById(clicked_id);
@@ -104,7 +136,7 @@
             //link to jc comment
             if (type == "3") {
                 //alert(cid);
-                window.open("/Page.aspx?externalid=" + cid);
+                window.open("/Page(YS).aspx?externalid=" + cid);
             }
             else if (type == "2") {
                 window.open("/Inbox.aspx?externalid=" + cid);
@@ -129,16 +161,17 @@
     <!-- Trigger the modal with a button -->
     <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>--%>
      <asp:Button runat="server" ID="ALL" OnClick="ALL_Click" CssClass=" button buttonM" Text="Mark All as Read"/>
-    <asp:Button ID="DEl" runat="server" Text="Delete All" data-toggle="modal" data-target="#myModal" CssClass=" button buttonD" />
+    <%--<asp:Button ID="DEl" runat="server" Text="Delete All" data-toggle="modal" data-target="#myModal" CssClass=" button buttonD" />--%>
+    <button type="button" class="button buttonD" data-toggle="modal" data-target="#myModal">Delete All&nbsp&nbsp<span class="glyphicon glyphicon-trash"></span></button>
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-content" style="background-color: beige;">
+                <div class="modal-header" style="background-color:red;">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Confirm delete all?</h4>
+                    <h4 class="modal-title" style="font-size: x-large;font-weight: bolder;font-weight:bolder;color:white;">Are you sure you want to perform this action?</h4>
                 </div>
                 <%--<div class="modal-body">
           <p>You have one notification!</p>
@@ -161,7 +194,8 @@
                      <span class="count" id="counter" runat="server"></span>
                  </span>
             </div>--%>
-            <asp:Timer ID="TimerforN" runat="server" Interval="5000" OnTick="TimerforN_Tick"></asp:Timer>
+            <%--<asp:Timer ID="TimerforN" runat="server" Interval="5000" OnTick="TimerforN_Tick"></asp:Timer>--%>
+            <asp:Timer ID="Timer1" runat="server" Interval="2000" OnTick="Timer1_Tick"></asp:Timer>
             <%--<h1 id="header" runat="server"></h1>--%>
             
             <ul runat="server" id="tabs" class="l">

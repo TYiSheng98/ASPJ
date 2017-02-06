@@ -67,14 +67,14 @@ namespace ASPJ
 
         }
 
-        protected void TimerforN_Tick(object sender, EventArgs e)
-        {
-            getnotifications();
-            
-            loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
+        //protected void TimerforN1_Tick(object sender, EventArgs e)
+        //{
+        //    getnotifications();
+
+        //    loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
 
 
-        }
+        //}
         public int getnotifycounter()
         {
             int newnotify;
@@ -165,7 +165,7 @@ namespace ASPJ
                     {
                         li.Style.Add("background-color", "lightblue");
                     }
-                    li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ")");
+                    
                     tabs.Controls.Add(li);
                     HtmlGenericControl h6 = new HtmlGenericControl("h6");
                     DateTime datetime = DateTime.Parse(ha.datet);
@@ -190,6 +190,7 @@ namespace ASPJ
                     HtmlGenericControl s1 = new HtmlGenericControl("span");
                     HtmlGenericControl a = new HtmlGenericControl("a");
                     a.Attributes.Add("href", "user.aspx" );
+                    a.Attributes.Add("target", "_blank");
                     a.InnerHtml = rid;
                     s0.Controls.Add(s1);
                     s1.Controls.Add(a);
@@ -198,11 +199,13 @@ namespace ASPJ
                     if (ha.type == "1")
                     {
                         //h5.InnerText = ha.send + " purchased your product.";
+                        li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ")");
                         s2.InnerHtml= " purchased your product ";
                     }
                     else if (ha.type == "2")
                     {
                         //h5.InnerText = ha.send + " commissioned your product.";
+                        li.Attributes.Add("onclick", "CLICK1(" + ha.id.ToString() + "," + ha.type + "," + ha.CID  + ",'" + ha.msg + "')");
                         HtmlGenericControl a2 = new HtmlGenericControl("a");
                         //need to integrate with kehui part
                         a2.Attributes.Add("href", "Inbox.aspx");
@@ -211,12 +214,25 @@ namespace ASPJ
                     }
                     else if (ha.type == "3")
                     {
+                        li.Attributes.Add("onclick", "CLICK2(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ",'" + ha.msg + "','" + rid + "')");
                         //h5.InnerText = ha.send + " commented '" + ha.msg + "' at " + ha.filename;
                         s2.InnerHtml= " commented on your product ";
                     }
+                    else if (ha.type == "4")
+                    {
+                        s2.InnerHtml = ha.msg;
+                        li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ")");
+                        s2.InnerHtml = ha.msg;
+                    }
+                    else if (ha.type == "5")
+                    {
+                        s2.InnerHtml = "You recently purchased " ;
+                        li.Attributes.Add("onclick", "CLICK(" + ha.id.ToString() + "," + ha.type + "," + ha.CID + ")");
+                    }
                     HtmlGenericControl s3 = new HtmlGenericControl("span");
                     HtmlGenericControl a1 = new HtmlGenericControl("a");
-                    a1.Attributes.Add("href", "google.com");
+                    a1.Attributes.Add("href", "/Page(YS).aspx?id="+ha.send);
+                    a1.Attributes.Add("target","_blank");
                     a1.InnerHtml = ha.filename;
                     s0.Controls.Add(s3);
                     s3.Controls.Add(a1);
@@ -348,6 +364,14 @@ namespace ASPJ
                 connection.Close();
             }
             Response.Redirect(Request.RawUrl);
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            getnotifications();
+
+            loop.Text = "Page refreshed at: " + DateTime.Now.ToLongTimeString();
+
         }
     }
 }
